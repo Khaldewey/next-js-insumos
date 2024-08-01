@@ -1,43 +1,32 @@
-import useProcessando from "@/data/hooks/useProcessando"
-import { resolve } from "path"
-import { useState } from "react"
 
 
-export default function Personagens() {
+interface PersonagensProps {
+  personagens: any[]
+}
+
+export default function Personagens(props: PersonagensProps) {
   
-  const { processando, iniciarProcessamento, encerrarProcessamento} = useProcessando()
-
-  async function simularChamadaApi(){
-    return new Promise(resolve => {
-     setTimeout(() => {
-      resolve(1)
-     }, 1000)
-    })
-
-  }
-
-  async function obterPersonagens(){
-    try {
-      iniciarProcessamento()
-      
-      await simularChamadaApi()
-    } finally {
-      encerrarProcessamento()
-     
-    }
-    
-    
+  
+  
+  
+  function renderizarPersonagens(){
+    return(
+      <ul>
+      {props.personagens.map((p:any) => (
+        <li key={p.name}>{p.name}</li>
+      ))}
+    </ul>
+    )
     
   }
+
+
+  
   
   return (
     <div>
-      {processando ? (
-      <div>Processando ...</div>
-      ) : (
-      <h1> Conteúdo com os Personagens</h1>
-      )}
-      <button onClick={obterPersonagens} className="bg-blue-300 p-2"> Obter</button>
+      {renderizarPersonagens()}
+     
     </div>
   )
 }
